@@ -1,15 +1,10 @@
-foreach (var argument in Arguments())
-    startInfo.ArgumentList.Add(argument);
+_process.OutputDataReceived += (_, args) =>
+{
+    if (!string.IsNullOrWhiteSpace(args.Data))
+        _logger.LogError(
+            "ENGINE STDOUT [{Worker}] {Message}",
+            Index,
+            args.Data);
+};
 
-_logger.LogError(
-    "ENGINE START CMD: {File} {Args}",
-    host,
-    string.Join(" ", Arguments()));
-
-_process = Process.Start(startInfo)
-           ?? throw new EngineUnavailableException(
-               "The engine worker process could not be started.");
-
-_logger.LogError(
-    "ENGINE STARTED PID={Pid}",
-    _process.Id);
+_process.BeginOutputReadLine();
