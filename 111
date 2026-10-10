@@ -1,3 +1,15 @@
-cd C:\inetpub\CheckersApi\enginehost
+foreach (var argument in Arguments())
+    startInfo.ArgumentList.Add(argument);
 
-.\CheckersApi.EngineHost.exe
+_logger.LogError(
+    "ENGINE START CMD: {File} {Args}",
+    host,
+    string.Join(" ", Arguments()));
+
+_process = Process.Start(startInfo)
+           ?? throw new EngineUnavailableException(
+               "The engine worker process could not be started.");
+
+_logger.LogError(
+    "ENGINE STARTED PID={Pid}",
+    _process.Id);
