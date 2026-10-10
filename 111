@@ -1,1 +1,3 @@
-{"type":"warmup","useTablebase":true,"maxDbPieces":0}
+cd C:\inetpub\CheckersApi\enginehost
+
+.\CheckersApi.EngineHost.exe
