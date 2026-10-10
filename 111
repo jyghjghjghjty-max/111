@@ -1,0 +1,31 @@
+Write-Host '    enabling ASP.NET Core stdout logs ...'
+
+$logsDir = Join-Path $PublishPath 'logs'
+
+if (!(Test-Path $logsDir))
+{
+    New-Item -Path $logsDir -ItemType Directory -Force | Out-Null
+}
+
+$webConfig = Join-Path $PublishPath 'web.config'
+
+if (Test-Path $webConfig)
+{
+    [xml]$xml = Get-Content $webConfig
+
+    $aspNetCore = $xml.configuration.location.'system.webServer'.aspNetCore
+
+    if ($aspNetCore)
+    {
+        $aspNetCore.stdoutLogEnabled = 'true'
+        $aspNetCore.stdoutLogFile = '.\logs\stdout'
+
+        $xml.Save($webConfig)
+
+        Write-Host '    stdout logging enabled'
+    }
+    else
+    {
+        Write-Warning 'aspNetCore section not found in web.config'
+    }
+}
