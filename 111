@@ -1,1 +1,8 @@
-{"type":"warmup","useTablebase":true,"maxDbPieces":0}
+_process.EnableRaisingEvents = true;
+
+_process.Exited += (_, _) =>
+{
+    _logger.LogError(
+        "ENGINE PROCESS EXITED. ExitCode={Code}",
+        _process.ExitCode);
+};
