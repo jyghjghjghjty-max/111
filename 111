@@ -1,10 +1,1 @@
-_process.OutputDataReceived += (_, args) =>
-{
-    if (!string.IsNullOrWhiteSpace(args.Data))
-        _logger.LogError(
-            "ENGINE STDOUT [{Worker}] {Message}",
-            Index,
-            args.Data);
-};
-
-_process.BeginOutputReadLine();
+Checkers REST Web API using Chinook
